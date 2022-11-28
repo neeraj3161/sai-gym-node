@@ -985,7 +985,7 @@ app.post('/checkInternet',(req,res)=>{
 
 
 app.get("/",(req,res)=>{
-    console.log("Running!!");
+    res.send("Hello");
 })
 
 
