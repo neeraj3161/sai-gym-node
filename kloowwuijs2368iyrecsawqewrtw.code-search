@@ -1,0 +1,157 @@
+# Query: kloowwuijs2368iyrecsawqewrtw
+# ContextLines: 1
+
+38 results - 1 file
+
+app.js:
+  306  
+  307: app.post('/getMemberInfokloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  308      req.header("Content-Type","application/json");
+
+  320  
+  321: app.post('/addMemberskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  322      req.header("Content-Type",'application/json');
+
+  351  
+  352: app.post("/getMemberIDkloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  353      const query="select max(member_id) from gmr.members as maxID"
+
+  363  
+  364: app.post("/getAllMemberskloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  365      const query="select member_id,name,medical_history,email,is_active,surname,ph_no,date_of_birth from gmr.members order by member_id desc"
+
+  378  
+  379: app.post("/addCollectionkloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  380      req.header("Content-Type",'application/json');
+
+  425  
+  426: app.post("/getCollectionIDkloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  427      const query="select max(collection_id) from gmr.collections"
+
+  439  
+  440: app.post("/getLastAddedkloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  441      const query="select max(member_id) from gmr.members as maxID where user_id=1"
+
+  453  
+  454: app.post("/getPlanInfokloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  455      req.header("Content-Type",'application/json');
+
+  470  
+  471: app.post("/getBirthdaykloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  472      req.header("Content-Type",'application/json');
+
+  488  
+  489: app.post("/isActivekloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  490      const query="select * from gmr.members where is_active=true"
+
+  501  
+  502: app.post("/isInActivekloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  503      const query="select * from gmr.members where is_active=false"
+
+  514  
+  515: app.post('/todayDuekloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  516      const query="select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where due_date=current_date or due_promise=current_date and due_cleared=false"
+
+  526  
+  527: app.post('/planDuekloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  528      const query="select * from gmr.dues join gmr.members on gmr.members.member_id = gmr.dues.member_id where due_date<current_date and is_active=true"
+
+  538  
+  539: app.post('/dueskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  540      req.header("Content-Type",'application/json');
+
+  574  
+  575: app.post('/alldueskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  576      const query="select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where due_cleared=false"
+
+  585  
+  586: app.post('/dueClearedkloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  587      req.header("Content-Type",'application/json');
+
+  602  
+  603: app.post('/upcomingDueskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  604      const query="select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where current_date = due_date - INTERVAL '2 DAYS'"
+
+  613  
+  614: app.post("/totaldueofMemkloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  615  
+
+  646  
+  647: app.post("/activateMemberkloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  648      req.header("Content-Type",'application/json');
+
+  663  
+  664: app.post("/inActivateMemberkloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  665      req.header("Content-Type",'application/json');
+
+  680  
+  681: app.post("/getPhonekloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  682      req.header("Content-Type",'application/json');
+
+  696  
+  697: app.post("/getDuesMemberkloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  698      req.header("Content-Type",'application/json');
+
+  710  
+  711: app.post("/getDuesMemberskloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  712      req.header("Content-Type",'application/json');
+
+  724  
+  725: app.post('/collectionskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  726      const query="select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where date_part('month',added_on)=date_part('month',current_date) and date_part('year',added_on)=date_part('year',current_date) order by added_on desc"
+
+  736  
+  737: app.post('/yearlyCollectionskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  738      const query="select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where date_part('year',added_on)=date_part('year',current_date) order by added_on desc"
+
+  747  
+  748: app.post('/yearlyCollectionSumkloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  749      const query="select sum(amount_paid) from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where date_part('year',added_on)=date_part('year',current_date)"
+
+  758  
+  759: app.post('/getSumkloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  760      req.header("Content-Type",'application/json');
+
+  773  
+  774: app.post('/totalPendingCollectionskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  775      req.header("Content-Type",'application/json');
+
+  790  //clear due
+  791: app.post('/clearDuekloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  792      req.header("Content-Type",'application/json');
+
+  808  
+  809: app.post('/clearDuePartialkloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  810      req.header("Content-Type",'application/json');
+
+  825  
+  826: app.post('/monthlyCollectionkloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  827      req.header("Content-Type",'application/json');
+
+  846  
+  847: app.post("/isaactivekloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  848      const query="select count(*) from gmr.dues where  date_part('day',due_date)> date_part('day',current_date) and date_part('month',due_date)>=date_part('month',current_date) and date_part('year',due_date)=date_part('year',current_date)"
+
+  859  
+  860: app.post("/isiinActivekloowwuijs2368iyrecsawqewrtw"+process.env.user_key,(req,res)=>{
+  861      const query="select count(member_id) from gmr.members where is_active=false"
+
+  891  
+  892: app.post('/editMemberInfokloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  893      req.header("Content-Type",'application/json');
+
+  916  
+  917: app.post('/paymentRecordkloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  918      req.header("Content-Type",'application/json');
+
+  936  
+  937: app.post('/notificationskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  938      req.header("Content-Type",'application/json');
+
+  949  
+  950: app.post('/doneCallingNotificationskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  951      req.header("Content-Type",'application/json');
+
+  963  
+  964: app.post('/setNotificationskloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
+  965      req.header("Content-Type",'application/json');
