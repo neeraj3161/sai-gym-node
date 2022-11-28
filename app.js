@@ -985,7 +985,9 @@ app.post('/checkInternet',(req,res)=>{
 
 
 
-
+process.on('unhandledRejection', (reason, promise) => {
+    // do something
+  });
 
 
 
