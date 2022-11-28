@@ -984,6 +984,10 @@ app.post('/checkInternet',(req,res)=>{
 })
 
 
+app.get("/",(req,res)=>{
+    console.log("Running!!");
+})
+
 
 process.on('unhandledRejection', (reason, promise) => {
     // do something
