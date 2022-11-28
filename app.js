@@ -988,6 +988,19 @@ app.get("/",(req,res)=>{
     res.send("Hello");
 })
 
+app.post("/getAllMember",(req,res)=>{
+    const query="select member_id,name,medical_history,email,is_active,surname,ph_no,date_of_birth from gmr.members order by member_id desc"
+    pool.query(query,(error,result)=>{
+        if(error){
+            console.log("Something went wrong")
+        }else{
+            // console.log(result.rows[0])
+            res.send((result.rows))
+            
+        }
+    })
+})
+
 
 process.on('unhandledRejection', (reason, promise) => {
     // do something
