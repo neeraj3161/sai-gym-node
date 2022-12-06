@@ -263,7 +263,7 @@ function run(){
     setInterval(checkDate,60000);
 }
 
-run();
+
 
 
 
