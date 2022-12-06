@@ -284,9 +284,9 @@ app.use(bp.json());
 
 
 const pool = new pg.Pool({
-    user:sai_gym_user,
-    host:dpg-ce1ivp6n6mpu84o2qle0-a.oregon-postgres.render.com,
-    database:sai_gym,
+    user:"sai_gym_user",
+    host:"dpg-ce1ivp6n6mpu84o2qle0-a.oregon-postgres.render.com",
+    database:"sai_gym",
     password: "UOpMw1AsZuOefkkrvh0tGXzhWB2flVuT",
     port: 5432,
     ssl:{
