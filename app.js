@@ -787,6 +787,8 @@ app.post('/totalPendingCollectionskloowwuijs2368iyrecsawqewrtw'+process.env.user
     })
 })
 
+
+
 //clear due
 app.post('/clearDuekloowwuijs2368iyrecsawqewrtw'+process.env.user_key,(req,res)=>{
     req.header("Content-Type",'application/json');
