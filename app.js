@@ -263,19 +263,20 @@ function run(){
     setInterval(checkDate,60000);
 }
 
-setInterval(wakeDb,60000);
+setInterval(wakeDb,720000);
 
 
 function wakeDb(){
-    req.header("Content-Type","application/json");
-    const query="select member_id,name,medical_history,email,is_active,surname,ph_no,date_of_birth from gmr.members where date_part('day',date_of_birth)= date_part('day',current_date) and date_part('month',date_of_birth)=date_part('month',current_date)"
-    pool.query(query,(error,result)=>{
-        if(error){
-            console.log(error)
-        }else{
-            console.log("DB called with data "+result.rows);
-        }
-    })
+    // const query="select member_id,name,medical_history,email,is_active,surname,ph_no,date_of_birth from gmr.members where date_part('day',date_of_birth)= date_part('day',current_date) and date_part('month',date_of_birth)=date_part('month',current_date)"
+    // pool.query(query,(error,result)=>{
+    //     if(error){
+    //         console.log(error)
+    //     }else{
+    //         console.log("DB called with data "+result.rows);
+    //     }
+    // })
+
+    console.log("Keeping the server active code runs every 12 mins")
 }
 
 
