@@ -263,6 +263,20 @@ function run(){
     setInterval(checkDate,60000);
 }
 
+setInterval(wakeDb,60000);
+
+
+function wakeDb(){
+    const query="select member_id,name,medical_history,email,is_active,surname,ph_no,date_of_birth from gmr.members where date_part('day',date_of_birth)= date_part('day',current_date) and date_part('month',date_of_birth)=date_part('month',current_date)"
+    pool.query(query,(error,result)=>{
+        if(error){
+            res.send(error)
+        }else{
+            res.send("DB called with data "+result.rows);
+        }
+    })
+}
+
 
 
 
