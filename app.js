@@ -295,7 +295,9 @@ const pool = new pg.Pool({
   ssl: {
     rejectUnauthorized: false,
   },
-  idle_in_transaction_session_timeout: 1000,
+  max: 20,
+  connectionTimeoutMillis: 0,
+  idleTimeoutMillis: 0,
 });
 
 pool.connect();
