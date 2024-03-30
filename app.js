@@ -14,8 +14,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-console.log(process.env.db_pass);
-
 //get date this will push the notification to the channel everyday at 6:15am if there's any birthday
 
 function checkDate() {
@@ -377,7 +375,7 @@ app.post("/getAllMembers" + process.env.secret_key, (req, res) => {
     "select member_id,name,medical_history,email,is_active,surname,ph_no,date_of_birth from gmr.members order by member_id desc";
   pool.query(query, (error, result) => {
     if (error) {
-      console.log("Something went wrong");
+      console.log("Something went wrong " + error);
     } else {
       // console.log(result.rows[0])
       res.send(result.rows);
