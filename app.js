@@ -300,8 +300,6 @@ const pool = new pg.Pool({
   idleTimeoutMillis: 0,
 });
 
-pool.connect();
-
 // reportGeneratedNotification();
 // festivalWishes();
 // planDueNotification();
@@ -309,6 +307,7 @@ pool.connect();
 // amountDueNotitfication();
 
 app.post("/getMemberInfo" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const member_id = req.body.member_id;
   const query = "select * from gmr.members where member_id=$1";
@@ -319,9 +318,12 @@ app.post("/getMemberInfo" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0]);
     }
   });
+  pool.end();
 });
 
 app.post("/addMembers" + process.env.secret_key, (req, res) => {
+  pool.connect();
+
   req.header("Content-Type", "application/json");
 
   const member_id = req.body.member_id;
@@ -359,9 +361,11 @@ app.post("/addMembers" + process.env.secret_key, (req, res) => {
     }
   });
   console.log("Connection ended!!");
+  pool.end();
 });
 
 app.post("/getMemberID" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query = "select max(member_id) from gmr.members as maxID";
   pool.query(query, (error, result) => {
     if (error) {
@@ -371,9 +375,11 @@ app.post("/getMemberID" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].max.toString());
     }
   });
+  pool.end();
 });
 
 app.post("/getAllMembers" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select member_id,name,medical_history,email,is_active,surname,ph_no,date_of_birth from gmr.members order by member_id desc";
   pool.query(query, (error, result) => {
@@ -384,11 +390,13 @@ app.post("/getAllMembers" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 //adding collections
 
 app.post("/addCollection" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const member_id = req.body.member_id;
   const plan = req.body.plan;
@@ -443,11 +451,13 @@ app.post("/addCollection" + process.env.secret_key, (req, res) => {
       }
     }
   });
+  pool.end();
 });
 
 //get collection id
 
 app.post("/getCollectionID" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query = "select max(collection_id) from gmr.collections";
   pool.query(query, (error, result) => {
     if (error) {
@@ -456,11 +466,13 @@ app.post("/getCollectionID" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].max.toString());
     }
   });
+  pool.end();
 });
 
 //last member added bby the user to get add member during plan
 
 app.post("/getLastAdded" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select max(member_id) from gmr.members as maxID where user_id=1";
   pool.query(query, (error, result) => {
@@ -471,9 +483,11 @@ app.post("/getLastAdded" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].max.toString());
     }
   });
+  pool.end();
 });
 
 app.post("/getPlanInfo" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const member_id = req.body.member_id;
   const query =
@@ -486,11 +500,13 @@ app.post("/getPlanInfo" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 //getBirthday
 
 app.post("/getBirthday" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const query =
     "select member_id,name,medical_history,email,is_active,surname,ph_no,date_of_birth from gmr.members where date_part('day',date_of_birth)= date_part('day',current_date) and date_part('month',date_of_birth)=date_part('month',current_date)";
@@ -501,9 +517,11 @@ app.post("/getBirthday" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/isActive" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query = "select * from gmr.members where is_active=true";
   pool.query(query, (error, result) => {
     if (error) {
@@ -512,9 +530,11 @@ app.post("/isActive" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/isInActive" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query = "select * from gmr.members where is_active=false";
   pool.query(query, (error, result) => {
     if (error) {
@@ -523,9 +543,11 @@ app.post("/isInActive" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/todayDue" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where due_date=current_date or due_promise=current_date and due_cleared=false";
   pool.query(query, (error, result) => {
@@ -535,9 +557,11 @@ app.post("/todayDue" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/planDue" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select * from gmr.dues join gmr.members on gmr.members.member_id = gmr.dues.member_id where due_date<current_date and is_active=true";
   pool.query(query, (error, result) => {
@@ -547,9 +571,11 @@ app.post("/planDue" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/dues" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const member_id = req.body.member_id;
   const due_date = req.body.due_date;
@@ -575,9 +601,11 @@ app.post("/dues" + process.env.secret_key, (req, res) => {
       res.end();
     }
   });
+  pool.end();
 });
 
 app.post("/alldues" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where due_cleared=false";
   pool.query(query, (error, result) => {
@@ -587,9 +615,11 @@ app.post("/alldues" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/dueCleared" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const collection_id = req.body.collection_id;
   const query =
@@ -602,9 +632,11 @@ app.post("/dueCleared" + process.env.secret_key, (req, res) => {
       res.send("Cleared");
     }
   });
+  pool.end();
 });
 
 app.post("/upcomingDues" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where current_date = due_date - INTERVAL '2 DAYS'";
   pool.query(query, (error, result) => {
@@ -614,9 +646,11 @@ app.post("/upcomingDues" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/totaldueofMem" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const member_id = req.body.member_id;
 
@@ -631,6 +665,7 @@ app.post("/totaldueofMem" + process.env.secret_key, (req, res) => {
       res.send(Result.rows[0].sum.toString());
     }
   });
+  pool.end();
 });
 
 // app.post('/clearDue',(req,res)=>{
@@ -647,6 +682,7 @@ app.post("/totaldueofMem" + process.env.secret_key, (req, res) => {
 //make member active
 
 app.post("/activateMember" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const member_id = req.body.member_id;
   const query = "update gmr.members set is_active = true where member_id = $1";
@@ -658,11 +694,13 @@ app.post("/activateMember" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 //make member inactive
 
 app.post("/inActivateMember" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const member_id = req.body.member_id;
   const query = "update gmr.members set is_active = false where member_id = $1";
@@ -674,11 +712,13 @@ app.post("/inActivateMember" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 //get member info with phoneNumber
 
 app.post("/getPhone" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const member_id = req.body.ph_no;
   const query = "select * from gmr.members where ph_no = $1";
@@ -690,11 +730,13 @@ app.post("/getPhone" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 //get list of all the dues
 
 app.post("/getDuesMember" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const query =
     "select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where due_cleared=false and is_active=true";
@@ -705,9 +747,11 @@ app.post("/getDuesMember" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/getDuesMembers" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const query =
     "select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where due_cleared=false and is_active=true and current_date>=due_promise";
@@ -718,11 +762,13 @@ app.post("/getDuesMembers" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 //collection report monthly
 
 app.post("/collections" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where date_part('month',added_on)=date_part('month',current_date) and date_part('year',added_on)=date_part('year',current_date) order by added_on desc";
   pool.query(query, (error, result) => {
@@ -732,9 +778,11 @@ app.post("/collections" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/yearlyCollections" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select * from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where date_part('year',added_on)=date_part('year',current_date) order by added_on desc";
   pool.query(query, (error, result) => {
@@ -744,9 +792,12 @@ app.post("/yearlyCollections" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/yearlyCollectionSum" + process.env.secret_key, (req, res) => {
+  pool.connect();
+
   const query =
     "select sum(amount_paid) from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where date_part('year',added_on)=date_part('year',current_date)";
   pool.query(query, (error, result) => {
@@ -756,9 +807,12 @@ app.post("/yearlyCollectionSum" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/getSum" + process.env.secret_key, (req, res) => {
+  pool.connect();
+
   req.header("Content-Type", "application/json");
   const date = req.body.date;
   const query =
@@ -771,9 +825,11 @@ app.post("/getSum" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/totalPendingCollections" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const query =
     "select sum(due_amount) from gmr.collections join gmr.members on gmr.members.member_id = gmr.collections.member_id where due_cleared=false";
@@ -788,10 +844,12 @@ app.post("/totalPendingCollections" + process.env.secret_key, (req, res) => {
       }
     }
   });
+  pool.end();
 });
 
 //clear due
 app.post("/clearDue" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const collection_id = req.body.collection_id;
 
@@ -805,11 +863,13 @@ app.post("/clearDue" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 //clear partial due
 
 app.post("/clearDuePartial" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const collection_id = req.body.collection_id;
   const pending_amount = req.body.pending_amount;
@@ -824,9 +884,11 @@ app.post("/clearDuePartial" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/monthlyCollection" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
 
   const query =
@@ -842,9 +904,11 @@ app.post("/monthlyCollection" + process.env.secret_key, (req, res) => {
       }
     }
   });
+  pool.end();
 });
 
 app.post("/isaactive" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select count(*) from gmr.dues where  date_part('day',due_date)> date_part('day',current_date) and date_part('month',due_date)>=date_part('month',current_date) and date_part('year',due_date)=date_part('year',current_date)";
   pool.query(query, (error, result) => {
@@ -854,9 +918,11 @@ app.post("/isaactive" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].count.toString());
     }
   });
+  pool.end();
 });
 
 app.post("/isiinActive" + process.env.secret_key, (req, res) => {
+  pool.connect();
   const query =
     "select count(member_id) from gmr.members where is_active=false";
   pool.query(query, (error, result) => {
@@ -866,12 +932,14 @@ app.post("/isiinActive" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].count.toString());
     }
   });
+  pool.end();
 });
 
 //new app code
 //login
 
 app.post("/login", (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const userName = req.body.userName;
   const password = req.body.password;
@@ -886,9 +954,11 @@ app.post("/login", (req, res) => {
       res.send(result.rows[0].count.toString());
     }
   });
+  pool.end();
 });
 
 app.post("/editMemberInfo" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   const name = req.body.name;
   const surname = req.body.surname;
@@ -907,11 +977,13 @@ app.post("/editMemberInfo" + process.env.secret_key, (req, res) => {
       res.send("Updated successfully!!");
     }
   });
+  pool.end();
 });
 
 //check previous payment record
 
 app.post("/paymentRecord" + process.env.secret_key, (req, res) => {
+  pool.connect();
   req.header("Content-Type", "application/json");
   var member_id = req.body;
 
@@ -928,6 +1000,7 @@ app.post("/paymentRecord" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
+  pool.end();
 });
 
 app.post("/notifications" + process.env.secret_key, (req, res) => {
