@@ -295,9 +295,10 @@ const pool = new pg.Pool({
   ssl: {
     rejectUnauthorized: false,
   },
+  idle_in_transaction_session_timeout: 3000,
 });
 
-const client = pool.connect();
+pool.connect();
 
 // reportGeneratedNotification();
 // festivalWishes();
@@ -316,7 +317,6 @@ app.post("/getMemberInfo" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0]);
     }
   });
-  client.release();
 });
 
 app.post("/addMembers" + process.env.secret_key, (req, res) => {
@@ -356,8 +356,6 @@ app.post("/addMembers" + process.env.secret_key, (req, res) => {
       res.send("Added");
     }
   });
-  client.release();
-
   console.log("Connection ended!!");
 });
 
@@ -371,7 +369,6 @@ app.post("/getMemberID" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].max.toString());
     }
   });
-  client.release();
 });
 
 app.post("/getAllMembers" + process.env.secret_key, (req, res) => {
@@ -385,7 +382,6 @@ app.post("/getAllMembers" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 //adding collections
@@ -445,7 +441,6 @@ app.post("/addCollection" + process.env.secret_key, (req, res) => {
       }
     }
   });
-  client.release();
 });
 
 //get collection id
@@ -459,7 +454,6 @@ app.post("/getCollectionID" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].max.toString());
     }
   });
-  client.release();
 });
 
 //last member added bby the user to get add member during plan
@@ -475,7 +469,6 @@ app.post("/getLastAdded" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].max.toString());
     }
   });
-  client.release();
 });
 
 app.post("/getPlanInfo" + process.env.secret_key, (req, res) => {
@@ -491,7 +484,6 @@ app.post("/getPlanInfo" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 //getBirthday
@@ -507,7 +499,6 @@ app.post("/getBirthday" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/isActive" + process.env.secret_key, (req, res) => {
@@ -519,7 +510,6 @@ app.post("/isActive" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/isInActive" + process.env.secret_key, (req, res) => {
@@ -531,7 +521,6 @@ app.post("/isInActive" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/todayDue" + process.env.secret_key, (req, res) => {
@@ -544,7 +533,6 @@ app.post("/todayDue" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/planDue" + process.env.secret_key, (req, res) => {
@@ -557,7 +545,6 @@ app.post("/planDue" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/dues" + process.env.secret_key, (req, res) => {
@@ -586,7 +573,6 @@ app.post("/dues" + process.env.secret_key, (req, res) => {
       res.end();
     }
   });
-  client.release();
 });
 
 app.post("/alldues" + process.env.secret_key, (req, res) => {
@@ -599,7 +585,6 @@ app.post("/alldues" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/dueCleared" + process.env.secret_key, (req, res) => {
@@ -615,7 +600,6 @@ app.post("/dueCleared" + process.env.secret_key, (req, res) => {
       res.send("Cleared");
     }
   });
-  client.release();
 });
 
 app.post("/upcomingDues" + process.env.secret_key, (req, res) => {
@@ -628,7 +612,6 @@ app.post("/upcomingDues" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/totaldueofMem" + process.env.secret_key, (req, res) => {
@@ -646,7 +629,6 @@ app.post("/totaldueofMem" + process.env.secret_key, (req, res) => {
       res.send(Result.rows[0].sum.toString());
     }
   });
-  client.release();
 });
 
 // app.post('/clearDue',(req,res)=>{
@@ -674,7 +656,6 @@ app.post("/activateMember" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 //make member inactive
@@ -691,7 +672,6 @@ app.post("/inActivateMember" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 //get member info with phoneNumber
@@ -708,7 +688,6 @@ app.post("/getPhone" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 //get list of all the dues
@@ -724,7 +703,6 @@ app.post("/getDuesMember" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/getDuesMembers" + process.env.secret_key, (req, res) => {
@@ -738,7 +716,6 @@ app.post("/getDuesMembers" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 //collection report monthly
@@ -753,7 +730,6 @@ app.post("/collections" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/yearlyCollections" + process.env.secret_key, (req, res) => {
@@ -766,7 +742,6 @@ app.post("/yearlyCollections" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/yearlyCollectionSum" + process.env.secret_key, (req, res) => {
@@ -779,7 +754,6 @@ app.post("/yearlyCollectionSum" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/getSum" + process.env.secret_key, (req, res) => {
@@ -795,7 +769,6 @@ app.post("/getSum" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/totalPendingCollections" + process.env.secret_key, (req, res) => {
@@ -813,7 +786,6 @@ app.post("/totalPendingCollections" + process.env.secret_key, (req, res) => {
       }
     }
   });
-  client.release();
 });
 
 //clear due
@@ -831,7 +803,6 @@ app.post("/clearDue" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 //clear partial due
@@ -851,7 +822,6 @@ app.post("/clearDuePartial" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/monthlyCollection" + process.env.secret_key, (req, res) => {
@@ -870,7 +840,6 @@ app.post("/monthlyCollection" + process.env.secret_key, (req, res) => {
       }
     }
   });
-  client.release();
 });
 
 app.post("/isaactive" + process.env.secret_key, (req, res) => {
@@ -883,7 +852,6 @@ app.post("/isaactive" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].count.toString());
     }
   });
-  client.release();
 });
 
 app.post("/isiinActive" + process.env.secret_key, (req, res) => {
@@ -896,7 +864,6 @@ app.post("/isiinActive" + process.env.secret_key, (req, res) => {
       res.send(result.rows[0].count.toString());
     }
   });
-  client.release();
 });
 
 //new app code
@@ -917,7 +884,6 @@ app.post("/login", (req, res) => {
       res.send(result.rows[0].count.toString());
     }
   });
-  client.release();
 });
 
 app.post("/editMemberInfo" + process.env.secret_key, (req, res) => {
@@ -939,7 +905,6 @@ app.post("/editMemberInfo" + process.env.secret_key, (req, res) => {
       res.send("Updated successfully!!");
     }
   });
-  client.release();
 });
 
 //check previous payment record
@@ -961,7 +926,6 @@ app.post("/paymentRecord" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/notifications" + process.env.secret_key, (req, res) => {
@@ -975,7 +939,6 @@ app.post("/notifications" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post(
@@ -991,7 +954,6 @@ app.post(
         res.send(result.rows);
       }
     });
-    client.release();
   }
 );
 
@@ -1008,7 +970,6 @@ app.post("/setNotifications" + process.env.secret_key, (req, res) => {
       res.send(result.rows);
     }
   });
-  client.release();
 });
 
 app.post("/checkInternet", (req, res) => {
