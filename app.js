@@ -291,7 +291,7 @@ const pool = new pg.Pool({
   host: process.env.db_host,
   database: process.env.db_name,
   password: process.env.db_pass,
-  port: 5432,
+  port: process.env.db_port,
   ssl: {
     rejectUnauthorized: false,
   },
