@@ -6,9 +6,27 @@ const app = express();
 const Port = 5000;
 require("dotenv").config();
 
+const axios = require('axios');
+
 var admin = require("firebase-admin");
 
 var serviceAccount = require(__dirname + "//saigym.json");
+
+function callApiEvery5Mins() {
+  axios({
+    method: 'get',
+    url: 'https://sai-gym-node.onrender.com/',
+  })
+    .then(function () {
+      console.log(`called app server at ${new Date()}`);
+    });
+
+}
+
+
+setInterval(() => {
+  callApiEvery5Mins();
+}, 300000);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
